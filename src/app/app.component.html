@@ -1,0 +1,66 @@
+<div id="pdfTable" #pdfTable>
+  <div class="col-sm-8 offset-sm-2">
+    <h1>Edit Enquiry</h1>
+    <div>
+      <form role="form" #myForm="ngForm" accept-charset="UTF-8" novalidate>
+        <div class="form-group center">
+          <label for="id"><b>Terms and Condition</b></label>
+          <div class="form-control" [ngClass]="{ 'has-error': tcCkEditor.invalid && tcCkEditor.touched }">
+            <ckeditor [(ngModel)]="termsCondition" #tcCkEditor="ngModel" name="tcCkEditor" id="tcCkEditorId" required
+              [config]="ckeConfig" debounce="500" (paste)="onPaste($event)" (change)="onChange($event)"
+              class="form-control" aria-describedby="descHelp">
+            </ckeditor>
+            <div *ngIf="tcCkEditor.invalid && tcCkEditor.touched" class="help-block">Required field.</div>
+          </div>
+        </div>
+        <br />
+        <div class="form-group center">
+          <label for="id"><b>About CC</b></label>
+          <div class="form-control" [ngClass]="{ 'has-error': pCkEditor.invalid && pCkEditor.touched }">
+            <ckeditor [(ngModel)]="aboutCC" #pCkEditor="ngModel" name="pCkEditor" required [config]="ckeConfig"
+              debounce="500" (paste)="onPaste($event)" (change)="onChange($event)" class="form-control"
+              aria-describedby="descHelp">
+            </ckeditor>
+            <div *ngIf="pCkEditor.invalid && pCkEditor.touched" class="help-block">Required field.</div>
+          </div>
+        </div>
+        <br>
+        <div class="form-group center">
+          <label for="id"><b>Acceptance by Principal</b></label>
+          <div class="form-control" [ngClass]="{ 'has-error': abpCkEditor.invalid && abpCkEditor.touched }">
+            <ckeditor [(ngModel)]="acceptanceByPrincipal" #abpCkEditor="ngModel" name="abpCkEditor" required
+              [config]="ckeConfig" debounce="500" (paste)="onPaste($event)" (change)="onChange($event)"
+              class="form-control" aria-describedby="descHelp">
+            </ckeditor>
+            <div *ngIf="abpCkEditor.invalid && abpCkEditor.touched" class="help-block">Required field.</div>
+          </div>
+          <br>
+          <div class="form-group has-feedback">
+            <b>Service Description</b>
+            <div *ngFor="let item of serviceDescriptionData; let i=index;">
+              <label for="serviceDescriptionData_{{i}}">
+            <input class="form-control" aria-describedby="descHelp" type="checkbox" [(ngModel)]="item.isSelected" name="serviceDescriptionData_{{i}}" value="{{item.value}}" (change)="isAllSelected()"/>
+                    {{item.name}}</label>
+            </div>
+          </div>
+          <div class="form-group has-feedback" [ngClass]="{ 'has-error': sdCkEditor.invalid && sdCkEditor.touched }">
+            <ckeditor [(ngModel)]="serviceDescription" #sdCkEditor="ngModel" name="sdCkEditor" required
+              [config]="ckeConfig" debounce="500" (paste)="onPaste($event)" (change)="onChange($event)"
+              class="form-control" style="font-size: 10px;" aria-describedby="descHelp">
+            </ckeditor>
+            <div *ngIf="sdCkEditor.invalid && sdCkEditor.touched" class="help-block">Required field.</div>
+          </div>
+
+
+
+
+
+          <!-- <input type="submit" value="Submit"> -->
+          <button [disabled]="myForm.invalid" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div> <button  (click)="downloadAsPDF()">Export To PDF</button></div>
